@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/*
+
+# Configuration files
+package-lock.json
+
+# Bancos de dados
+database/dev.sqlite3
