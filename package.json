@@ -1,7 +1,7 @@
 {
   "name": "sistema-carteira-virtual",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicação de carteiras virtuais utilizando Node.js, Express e Knex.",
   "homepage": "https://github.com/masassuncao/sistema-carteira-virtual",
   "main": "server.js",
   "scripts": {
