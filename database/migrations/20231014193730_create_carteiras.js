@@ -4,9 +4,9 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable('carteiras', (table) => {
-        table.text("idUsuario", 36).primary().notNullable()
-        table.double("saldo").notNullable().defaultTo(0)
-        table.timestamp("ultimaAtualizacao").defaultTo(knex.fn.now())
+        table.text("idCarteira", 36).primary().notNullable()
+        table.double("saldo", 2).notNullable().defaultTo(0)
+        table.timestamp("ultimaAtualizacao", {useTz: true}).defaultTo(knex.fn.now())
     });
 };
 

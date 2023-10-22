@@ -5,10 +5,11 @@
 exports.up = function(knex) {
     return knex.schema.createTable('transacoes', (table) => {
         table.uuid("idTransacao").primary().defaultTo(knex.fn.uuid())
-        table.text("idUsuario", 36).notNullable()
-        table.double("valorTransacao").notNullable().defaultTo(0)
-        table.timestamp("dataHoraTransacao").defaultTo(knex.fn.now())
-        table.foreign("idUsuario").references('carteiras.idUsuario')
+        table.text("idCarteira", 36).notNullable()
+        table.double("valorTransacao", 2).notNullable().defaultTo(0)
+        table.enu("naturezaTransacao", ['credito', 'debito'])
+        table.timestamp("dataHoraTransacao", {useTz: true}).defaultTo(knex.fn.now())
+        table.foreign("idCarteira").references('carteiras.idCarteira')
     })
 };
 
