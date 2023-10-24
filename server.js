@@ -9,16 +9,16 @@ const env = require('dotenv').config()
 // Importa os módulos para tratamento das rotas
 const apiRotasV1 = require('./src/routes/rotasV1')
 
+// Importa o módulo de serviço de criação de carteiras
+const servicoCriacaoCarteiras = require('./src/services/servicoCriacacaoCarteiras')
+servicoCriacaoCarteiras.consumirFila()
+
 app.use(cors({
     origin: '*'
 }));
 
 // API versao 1
 app.use('/api/v1', apiRotasV1)
-
-
-
-
 
 // Inicializa o servidor HTTP na porta especificada
 const {APP_PORT: PORT} = process.env
