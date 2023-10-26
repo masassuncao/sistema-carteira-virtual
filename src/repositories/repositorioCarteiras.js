@@ -2,7 +2,9 @@ const knexConfig = require('../../knexfile.js')[process.env.ENV || 'development'
 const knex = require('knex')(knexConfig)
 
 function incluirNovaCarteira(novaCarteira) {
-    return knex('carteiras').insert({...novaCarteira})
+    return knex('carteiras')
+            .insert({...novaCarteira})
+            .returning('idCarteira')
 }
 
 function buscarCarteiraPorId(id) {
