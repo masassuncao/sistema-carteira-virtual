@@ -18,7 +18,7 @@ rotasV1.use(express.urlencoded({extended: true}))
 // Rotas da aplicação
 rotasV1.get('/carteiras/:id/saldo', controladoraCarteiras.buscarCarteiraPorId)
 rotasV1.get('/carteiras/:id/extrato/', controladoraCarteiras.obterExtratoTransacoesPorIdCarteira)
-rotasV1.post('/carteiras/:id/transacao/', controladoraCarteiras.realizarTransacaoCarteiraViaREST)
+rotasV1.post('/carteiras/:id/transacao/', controladoraCarteiras.realizarTransacaoCarteira)
 rotasV1.use(
     (req, res) => {
         res.statusCode = 404

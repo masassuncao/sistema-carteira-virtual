@@ -7,6 +7,12 @@ function incluirNovaCarteira(novaCarteira) {
             .returning('idCarteira')
 }
 
+function incluirNovaTransacaoNaCarteira(novaTransacao) {
+    return knex('transacoes')
+            .insert({...novaTransacao})
+            .returning('idTransacao')
+}
+
 function buscarCarteiraPorId(id) {
     return knex('carteiras')
             .where({idCarteira: id})
@@ -39,6 +45,7 @@ module.exports = {
     buscarCarteiraPorId,
     excluirCarteiraPorId,
     incluirNovaCarteira,
+    incluirNovaTransacaoNaCarteira,
     listarTodasCarteiras,
     listarTodasTransacoesPorIdCarteira,
 }

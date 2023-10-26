@@ -2,14 +2,14 @@
 const repositorioCarteiras = require('../repositories/repositorioCarteiras')
 
 // Importa o módulo modelo de usuario
-const modeloCarteria = require('../models/modeloCarteria')
+const modeloCarteira = require('../models/modeloCarteira')
 
 // Importa o módulo dotenv
 const env = require('dotenv').config()
 const {SALDO_PADRAO_INICIAL: SALDO_INICIAL} = process.env
 
 function criarCarteira(dadosNovaCarteira) {
-    const modelo = modeloCarteria.modeloNovaCarteira
+    const modelo = modeloCarteira.modeloNovaCarteira
     dadosNovaCarteira.saldo = parseFloat(SALDO_INICIAL)
 
     try {
@@ -53,10 +53,17 @@ function obterExtratoTransacoesPorIdCarteira(req, res) {
     
 }
 
-function realizarTransacaoCarteiraViaREST(req, res) {
+function realizarTransacaoCarteira(req, res) {
     idCarteira = req.params.id
     valorTransacao = req.body.valorTransacao
     naturezaTransacao = req.body.naturezaTransacao
+
+    var transacao = {
+        idCarteira: idCarteira,
+        valorTransacao: valorTransacao,
+        naturezaTransacao: naturezaTransacao
+    }
+
     repositorioCarteiras.buscarCarteiraPorId(idCarteira)
         .then(carteiras => {
             if (carteiras.length) {
@@ -67,7 +74,13 @@ function realizarTransacaoCarteiraViaREST(req, res) {
                         carteiraAposTransacao = atualizarSaldoCarteira(carteiras[0], valorTransacao, naturezaTransacao)
                         repositorioCarteiras.alterarCarteiraPorId(idCarteira, carteiraAposTransacao)
                             .then( () => {
-                                return res.status(200).json({status: "OK", mensagem: "Transação realizada com sucesso."})
+                                repositorioCarteiras.incluirNovaTransacaoNaCarteira(transacao)
+                                    .then( () => {
+                                        return res.status(200).json({status: "OK", mensagem: "Transação realizada com sucesso."})
+                                    })
+                                    .catch(err => {
+                                        return res.status(500).json({status: "NOK", mensagem: `Erro ao registrar transação no banco de dados: ${err.message}`})
+                                    })
                             })
                             .catch(err => {
                                 return res.status(500).json({status: "NOK", mensagem: `Erro ao atualizar registro no banco de dados: ${err.message}`})
@@ -135,5 +148,5 @@ module.exports = {
     excluirCarteira,
     obterTodasCarteiras,
     obterExtratoTransacoesPorIdCarteira,
-    realizarTransacaoCarteiraViaREST
+    realizarTransacaoCarteira
 }
