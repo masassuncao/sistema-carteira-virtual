@@ -73,14 +73,18 @@ function realizarTransacaoCarteira(req, res) {
                         //Efetua transacao:
                         carteiraAposTransacao = atualizarSaldoCarteira(carteiras[0], valorTransacao, naturezaTransacao)
                         repositorioCarteiras.alterarCarteiraPorId(idCarteira, carteiraAposTransacao)
-                            .then( () => {
-                                repositorioCarteiras.incluirNovaTransacaoNaCarteira(transacao)
-                                    .then( () => {
-                                        return res.status(200).json({status: "OK", mensagem: "Transação realizada com sucesso."})
-                                    })
-                                    .catch(err => {
-                                        return res.status(500).json({status: "NOK", mensagem: `Erro ao registrar transação no banco de dados: ${err.message}`})
-                                    })
+                            .then( carteiras => {
+                                if (carteiras) {
+                                    repositorioCarteiras.incluirNovaTransacaoNaCarteira(transacao)
+                                        .then( () => {
+                                            return res.status(200).json({status: "OK", mensagem: "Transação realizada com sucesso."})
+                                        })
+                                        .catch(err => {
+                                            return res.status(500).json({status: "NOK", mensagem: `Erro ao registrar transação no banco de dados: ${err.message}`})
+                                        })
+                                } else {
+                                    return res.status(404).json({status: "NOK", mensagem: "Carteira não cadastrada."})
+                                }
                             })
                             .catch(err => {
                                 return res.status(500).json({status: "NOK", mensagem: `Erro ao atualizar registro no banco de dados: ${err.message}`})
