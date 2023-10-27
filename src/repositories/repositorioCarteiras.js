@@ -30,13 +30,14 @@ function listarTodasCarteiras() {
 function alterarCarteiraPorId(id, carteiraComAlteracao) {
     return knex('carteiras')
         .where({idCarteira: id})
+        .returning('idCarteira')
         .update(carteiraComAlteracao)
 }
 
 function excluirCarteiraPorId(id) {
     return knex('carteiras')
         .where({idCarteira: id})
-        .returning('id')
+        .returning('idCarteira')
         .del()
 }
 
