@@ -1,4 +1,4 @@
-const knexConfig = require('../../knexfile.js')[process.env.ENV || 'development']
+const knexConfig = require('../../knexfile.js')[process.env.ENV_DEPLOY || 'development']
 const knex = require('knex')(knexConfig)
 
 function incluirNovaCarteira(novaCarteira) {
