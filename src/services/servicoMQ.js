@@ -1,6 +1,10 @@
+// Importa o módulo dotenv
+const env = require('dotenv').config()
+const {ENDERECO_HOST_MQ: HOST_MQ} = process.env
+
 function connect() {
   return require('amqplib')
-    .connect("amqp://localhost")
+    .connect(HOST_MQ)
     .then(conn => conn.createChannel());
 }
 
