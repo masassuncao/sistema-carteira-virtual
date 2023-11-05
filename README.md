@@ -62,7 +62,7 @@ Fila para exclusão de uma carteira existente ==> 'filaExcluirCarteiras'
 
 ### Carteiras
 
- - GET    /carteiras/:id/saldo           -> Consultar saldo de uma carteira
- - GET    /carteiras/:id/extrato/        -> Consultar extrato de uma carteira
- - POST   /carteiras/:id/transacao/      -> Realizar uma transação com a carteira
+ - GET    /api/v1/carteiras/:id/saldo           -> Consultar saldo de uma carteira
+ - GET    /api/v1/carteiras/:id/extrato/        -> Consultar extrato de uma carteira
+ - POST   /api/v1/carteiras/:id/transacao/      -> Realizar uma transação com a carteira
 
